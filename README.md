@@ -4,7 +4,32 @@ Spring Boot demo application generated using the [Spring Initializr](https://sta
 
 # Getting Started
 
-### Reference Documentation
+## Software
+
+Install Docker
+
+* https://docs.docker.com/engine/install/ubuntu/
+
+Using [Arkade](https://arkade.dev/) install additional dependencies
+
+```
+ark get kubectl helm buildx devspace k3d yq 
+```
+
+## Start cluster
+
+```
+k3d cluster create demo1
+```
+
+## Build and Deploy
+
+```
+devspace use namespace dev-01
+devspace deploy
+```
+
+# Reference Documentation
 For further reference, please consider the following sections:
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
