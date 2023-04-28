@@ -33,6 +33,7 @@ devspace deploy
 
 ```
 devspace purge
+k3d cluster create demo1
 ```
 
 
@@ -43,3 +44,4 @@ For further reference, please consider the following sections:
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.0.6/maven-plugin/reference/html/)
 * [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.0.6/maven-plugin/reference/html/#build-image)
 * [Caching Maven Dependencies with Docker](https://www.baeldung.com/ops/docker-cache-maven-dependencies)
+* [Devspace](https://www.devspace.sh/)
