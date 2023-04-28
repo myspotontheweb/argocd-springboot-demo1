@@ -29,6 +29,13 @@ devspace use namespace dev-01
 devspace deploy
 ```
 
+## Cleanup
+
+```
+devspace purge
+```
+
+
 # Reference Documentation
 For further reference, please consider the following sections:
 
