@@ -41,10 +41,10 @@ deployments:
           repository: ${runtime.images.app.image}
           tag: ${runtime.images.app.tag}
 
-
 # This is a list of `dev` containers that are based on the containers created by your deployments
 dev:
   app:
+    imageSelector: c8n.io/myspotontheweb/springboot-demo1
     # Replace the container image with this dev-optimized image (allows to skip image building during development)
     devImage: ghcr.io/loft-sh/devspace-containers/java-maven:3-openjdk-17-slim
     # Sync files between the local filesystem and the development container
