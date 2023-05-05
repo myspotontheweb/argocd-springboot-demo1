@@ -33,9 +33,16 @@ devspace deploy
 
 ```
 devspace purge
-k3d cluster create demo1
+k3d cluster delete demo1
 ```
 
+# Install using Helm
+
+This repository pushes both a docker image and an associoated helm chart to Github packages. This enables the software to be installed as follows:
+
+```
+helm upgrade demo1 --install oci://ghcr.io/myspotontheweb/spring-boot-demo1/charts/demo1 --version 1.0.1 --namespace demo1 --create-namespace
+```
 
 # Reference Documentation
 For further reference, please consider the following sections:
