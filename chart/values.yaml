@@ -5,7 +5,7 @@
 replicaCount: 2
 
 image:
-  repository: c8n.io/myspotontheweb/springboot-demo1
+  repository: ghcr.io/myspotontheweb/spring-boot-demo1/demo1
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
