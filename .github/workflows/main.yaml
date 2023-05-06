@@ -63,7 +63,17 @@ jobs:
         with:
           helm: latest
 
-      - name: Push Helm chart
+      - name: Push Helm chart from a normal push
+        if: contains(github.ref, 'heads')
+        run: |
+          helm dependency build chart
+          helm package chart --version ${{ env.VERSION }} --app-version v${{ env.VERSION }}
+          helm push demo1-${{ env.VERSION }}.tgz oci://${{ env.APP_REPO }}/charts
+        env:
+          VERSION: sha-$(git rev-parse --short $GITHUB_SHA)
+
+      - name: Push Helm chart from a pushed tag
+        if: contains(github.ref, 'tags')
         run: |
           helm dependency build chart
           helm package chart --version ${{ env.VERSION }} --app-version v${{ env.VERSION }}
