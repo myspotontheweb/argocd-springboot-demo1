@@ -14,6 +14,7 @@ on:
       - 'main'
 
 env:
+  APP_REPO:  ghcr.io/myspotontheweb/spring-boot-demo1
   APP_IMAGE: ghcr.io/myspotontheweb/spring-boot-demo1/demo1
 
 jobs:
@@ -28,7 +29,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           # list of Docker images to use as base name for tags
-          images: ${{env.APP_IMAGE}}
+          images: ${{ env.APP_IMAGE }}
           # generate Docker tags based on the following events/attributes
           tags: |
             type=schedule
@@ -56,3 +57,16 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - uses: alexellis/setup-arkade@v2
+      - uses: alexellis/arkade-get@master
+        with:
+          helm: latest
+
+      - name: Push Helm chart
+        run: |
+          helm dependency build chart
+          helm package chart --version ${{ env.VERSION }} --app-version v${{ env.VERSION }}
+          helm push demo1-${{ env.VERSION }}.tgz oci://${{ env.APP_REPO }}/charts
+        env:
+          VERSION: ${{ steps.meta.outputs.version }}
