@@ -5,7 +5,7 @@ name: release
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 env:
   PREPROD_APP_REPO:   ghcr.io/myspotontheweb/argocd-workloads-demo/pre-prod/demo1
