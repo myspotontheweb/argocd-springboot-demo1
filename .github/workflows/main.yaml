@@ -25,6 +25,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install Arkade
+        uses: alexellis/setup-arkade@v2
+      - uses: alexellis/arkade-get@master
+        with:
+          helm: latest
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -48,9 +57,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
@@ -59,17 +65,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  package:
-    if: contains(github.ref, 'tags')
-    runs-on: ubuntu-latest
-    steps:
-
-      - uses: alexellis/setup-arkade@v2
-      - uses: alexellis/arkade-get@master
-        with:
-          helm: latest
-
       - name: Push Helm chart from a pushed tag
+        if: contains(github.ref, 'tags')
         run: |
           helm package chart --version ${{ env.VERSION }} --app-version v${{ env.VERSION }} --dependency-update
           helm push ${{ env.APP_NAME }}-${{ env.VERSION }}.tgz oci://${{ env.APP_REPO }}/charts
