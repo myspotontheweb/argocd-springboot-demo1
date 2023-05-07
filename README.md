@@ -41,7 +41,7 @@ k3d cluster delete demo1
 This repository pushes both a docker image and an associoated helm chart to Github packages. This enables the software to be installed as follows:
 
 ```
-helm upgrade demo1 --install oci://ghcr.io/myspotontheweb/spring-boot-demo1/charts/demo1 --version 1.0.1 --namespace demo1 --create-namespace
+helm upgrade demo1 oci://ghcr.io/myspotontheweb/spring-boot-demo1/charts/demo1 --version X.Y.Z --install --namespace demo1 --create-namespace
 ```
 
 # Continuous Integration
@@ -58,7 +58,7 @@ git tag vX.Y.Z -a -m "New release"
 git push --tags
 ```
 
-The CI login is captured here
+The CI logic is captured here
 
 * [.github/workflows/main.yaml](.github/workflows/main.yaml)
 
