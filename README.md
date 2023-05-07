@@ -62,6 +62,10 @@ The CI logic is captured here
 
 * [.github/workflows/ci.yaml](.github/workflows/ci.yaml)
 
+A successfull build will trigger sync workflow in the GitOps workloads repo, controller ArgoCD
+
+* [(myspotontheweb/argocd-workloads-demo) .github/workflows/updatecli.yaml](https://github.com/myspotontheweb/argocd-workloads-demo/blob/main/.github/workflows/updatecli.yaml)
+
 # Reference Documentation
 For further reference, please consider the following sections:
 
