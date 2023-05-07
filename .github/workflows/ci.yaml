@@ -14,7 +14,7 @@ on:
       - 'main'
 
 env:
-  APP_REPO:  ghcr.io/myspotontheweb/spring-boot-demo1
+  APP_REPO:  ghcr.io/myspotontheweb/argocd-workloads-demo/pre-prod
   APP_NAME:  demo1
 
 jobs:
