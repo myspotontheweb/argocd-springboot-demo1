@@ -72,3 +72,14 @@ jobs:
           helm push ${{ env.APP_NAME }}-${{ env.VERSION }}.tgz oci://${{ env.APP_REPO }}/charts
         env:
           VERSION: ${{ steps.meta.outputs.version }}
+
+  trigger-gitops-sync:
+    runs-on: ubuntu-latest
+    needs: 
+      - build
+    steps:
+      - name: Trigger the sync workflow on the GitOps workloads repo
+        run: |
+          gh workflow run Updatecli --repo myspotontheweb/argocd-workloads-demo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITOPS_TRIGGER_TOKEN }}
