@@ -4,8 +4,12 @@
 name: release
 
 on:
-  release:
-    types: [created, published]
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        description: Provide the helm version to promote to production
+        required: true
 
 env:
   PREPROD_APP_REPO:   ghcr.io/myspotontheweb/argocd-workloads-demo/pre-prod/demo1
@@ -30,4 +34,4 @@ jobs:
           crane copy ${{ env.PREPROD_APP_REPO }}:${{ env.VERSION }} ${{ env.PROD_APP_REPO }}:${{ env.VERSION }}
           crane copy ${{ env.PREPROD_CHART_REPO }}:${{ env.VERSION }} ${{ env.PROD_CHART_REPO }}:${{ env.VERSION }}
         env:
-          VERSION: ${GITHUB_REF#refs/tags/v}
+          VERSION: ${{ github.event.inputs.version }}
