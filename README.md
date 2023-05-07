@@ -60,7 +60,7 @@ git push --tags
 
 The CI logic is captured here
 
-* [.github/workflows/main.yaml](.github/workflows/main.yaml)
+* [.github/workflows/ci.yaml](.github/workflows/ci.yaml)
 
 # Reference Documentation
 For further reference, please consider the following sections:
