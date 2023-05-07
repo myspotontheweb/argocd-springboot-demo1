@@ -68,7 +68,7 @@ jobs:
       - name: Push Helm chart from a pushed tag
         if: contains(github.ref, 'tags')
         run: |
-          helm package chart --version ${{ env.VERSION }} --app-version v${{ env.VERSION }} --dependency-update
+          helm package chart --version ${{ env.VERSION }} --app-version ${{ env.VERSION }} --dependency-update
           helm push ${{ env.APP_NAME }}-${{ env.VERSION }}.tgz oci://${{ env.APP_REPO }}/charts
         env:
           VERSION: ${{ steps.meta.outputs.version }}
