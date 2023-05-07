@@ -41,7 +41,7 @@ k3d cluster delete demo1
 This repository pushes both a docker image and an associoated helm chart to Github packages. This enables the software to be installed as follows:
 
 ```
-helm upgrade demo1 oci://ghcr.io/myspotontheweb/spring-boot-demo1/charts/demo1 --version X.Y.Z --install --namespace demo1 --create-namespace
+helm upgrade demo1 oci://ghcr.io/myspotontheweb/argocd-workloads-demo/pre-prod/charts/demo1 --version 1.0.14 --install --namespace demo1 --create-namespace
 ```
 
 # Continuous Integration
