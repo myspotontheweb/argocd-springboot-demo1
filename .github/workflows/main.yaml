@@ -15,9 +15,10 @@ on:
 
 env:
   APP_REPO:  ghcr.io/myspotontheweb/spring-boot-demo1
-  APP_IMAGE: ghcr.io/myspotontheweb/spring-boot-demo1/demo1
+  APP_NAME:  demo1
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +30,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           # list of Docker images to use as base name for tags
-          images: ${{ env.APP_IMAGE }}
+          images: ${{ env.APP_REPO }}/${{ env.APP_NAME }}
           # generate Docker tags based on the following events/attributes
           tags: |
             type=schedule
@@ -58,15 +59,19 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-#      - uses: alexellis/setup-arkade@v2
-#      - uses: alexellis/arkade-get@master
-#        with:
-#          helm: latest
-#          jq: latest
-#
-#      - name: Push Helm chart from a pushed tag
-#        run: |
-#          helm package chart --version ${{ env.VERSION }} --app-version v${{ env.VERSION }} --dependency-update
-#          helm push demo1-${{ env.VERSION }}.tgz oci://${{ env.APP_REPO }}/charts
-#        env:
-#          VERSION: $(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /user/packages/container/spring-boot-demo1%2Fcharts%2Fdemo1/versions | jq '.[0].metadata.container.tags[0]' -r | awk -F. -v OFS=. '{$NF += 1 ; print}')
+  package:
+    if: contains(github.ref, 'tags')
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: alexellis/setup-arkade@v2
+      - uses: alexellis/arkade-get@master
+        with:
+          helm: latest
+
+      - name: Push Helm chart from a pushed tag
+        run: |
+          helm package chart --version ${{ env.VERSION }} --app-version v${{ env.VERSION }} --dependency-update
+          helm push ${{ env.APP_NAME }}-${{ env.VERSION }}.tgz oci://${{ env.APP_REPO }}/charts
+        env:
+          VERSION: ${{ steps.meta.outputs.version }}
