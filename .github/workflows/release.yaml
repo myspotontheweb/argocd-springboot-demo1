@@ -35,3 +35,15 @@ jobs:
           crane copy ${{ env.PREPROD_CHART_REPO }}:${{ env.VERSION }} ${{ env.PROD_CHART_REPO }}:${{ env.VERSION }}
         env:
           VERSION: ${{ github.event.inputs.version }}
+
+  trigger-gitops-sync:
+    runs-on: ubuntu-latest
+    needs:
+      - promote
+    steps:
+      - name: Trigger the sync workflow on the GitOps workloads repo
+        run: |
+          gh workflow run Updatecli --repo myspotontheweb/argocd-workloads-demo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITOPS_TRIGGER_TOKEN }}
+
