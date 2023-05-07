@@ -19,7 +19,7 @@ env:
 
 jobs:
 
-  build:
+  promote:
     runs-on: ubuntu-latest
     steps:
 
