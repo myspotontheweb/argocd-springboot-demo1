@@ -1,0 +1,34 @@
+#
+# https://docs.docker.com/build/ci/github-actions/
+#
+name: release
+
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+
+env:
+  PREPROD_APP_REPO:   ghcr.io/myspotontheweb/argocd-workloads-demo/pre-prod/demo1
+  PREPROD_CHART_REPO: ghcr.io/myspotontheweb/argocd-workloads-demo/pre-prod/charts/demo1
+  PROD_APP_REPO:      ghcr.io/myspotontheweb/argocd-workloads-demo/prod/demo1
+  PROD_CHART_REPO:    ghcr.io/myspotontheweb/argocd-workloads-demo/prod/charts/demo1
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Install Arkade
+        uses: alexellis/setup-arkade@v2
+      - uses: alexellis/arkade-get@master
+        with:
+          crane: latest
+
+      - name: Promote container image to production registry
+        run: |
+          crane copy ${{ env.PREPROD_APP_REPO }}:${{ env.VERSION }} ${{ env.PROD_APP_REPO }}:${{ env.VERSION }}
+          crane copy ${{ env.PREPROD_CHART_REPO }}:${{ env.VERSION }} ${{ env.PROD_CHART_REPO }}:${{ env.VERSION }}
+        env:
+          VERSION: ${GITHUB_REF#refs/tags/v}
