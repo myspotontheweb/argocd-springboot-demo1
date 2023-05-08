@@ -31,10 +31,13 @@ jobs:
 
       - name: Promote container image to production registry
         run: |
+          echo ${{ env.DOCKER_PASSWORD }} | crane auth login ghcr.io --username ${{ env.DOCKER_USERNAME }} --password-stdin
           crane copy ${{ env.PREPROD_APP_REPO }}:${{ env.VERSION }} ${{ env.PROD_APP_REPO }}:${{ env.VERSION }}
           crane copy ${{ env.PREPROD_CHART_REPO }}:${{ env.VERSION }} ${{ env.PROD_CHART_REPO }}:${{ env.VERSION }}
         env:
           VERSION: ${{ github.event.inputs.version }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
   trigger-gitops-sync:
     runs-on: ubuntu-latest
