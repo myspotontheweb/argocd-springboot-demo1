@@ -13,7 +13,7 @@ Install Docker
 Using [Arkade](https://arkade.dev/) install additional dependencies
 
 ```
-ark get kubectl helm buildx devspace k3d yq 
+ark get kubectl helm buildx devspace k3d crane jq yq 
 ```
 
 ## Start cluster
