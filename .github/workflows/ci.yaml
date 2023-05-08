@@ -80,6 +80,6 @@ jobs:
     steps:
       - name: Trigger the sync workflow on the GitOps workloads repo
         run: |
-          gh workflow run Updatecli --repo myspotontheweb/argocd-workloads-demo
+          gh workflow run sync --repo myspotontheweb/argocd-workloads-demo
         env:
           GITHUB_TOKEN: ${{ secrets.GITOPS_TRIGGER_TOKEN }}
