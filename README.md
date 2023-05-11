@@ -46,6 +46,15 @@ helm upgrade demo1 oci://ghcr.io/myspotontheweb/argocd-workloads-demo/prod/chart
 
 # Continuous Integration
 
+```mermaid
+flowchart LR
+    ci[CI engine] --> | CI image build |reg1[(Pre-prod Registry)]
+    ci --> |Tagged image build| reg1
+    ci --> |Tagged helm chart build| reg1
+    reg1 --> |Promote tagged image| reg2[(Prod Registry)]
+    reg1 --> |Promote tagged helm chart| reg2[(Prod Registry)]
+```
+
 Docker images
 
 * A docker image build is triggered by each push to the repository.
