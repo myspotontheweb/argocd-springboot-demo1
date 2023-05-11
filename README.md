@@ -50,7 +50,7 @@ helm upgrade demo1 oci://ghcr.io/myspotontheweb/argocd-workloads-demo/prod/chart
 flowchart 
     ci(CI engine) --> | CI image build |reg1[(Pre-prod Registry)]
     ci --> |Tagged build image+chart| reg1
-    reg1 --> |Promote image+chart| reg2[(Prod Registry)]
+    reg1 --> |Release image+chart| reg2[(Prod Registry)]
     reg1 --> |Pull latest chart| k8spprod(Kubernetes Pre-Prod)
     reg2 --> |Pull latest chart| k8sprod(Kubernetes Prod)
 ```
