@@ -1,11 +1,19 @@
 version: v2beta1
 name: springboot-demo1
 
+vars:
+  DOCKER_REGISTRY:
+    question: What Docker registry are you using?
+    default: crdemo376iqirreuubu4.azurecr.io
+  DOCKER_REPO:
+    question: What Docker repository are you using?
+    default: myspotontheweb/argocd-workloads-demo/demo1
+
 # This is a list of `images` that DevSpace can build for this project
 # We recommend to skip image building during development (devspace dev) as much as possible
 images:
   app:
-    image: ghcr.io/myspotontheweb/argocd-workloads-demo/pre-prod/demo1
+    image: ${DOCKER_REGISTRY}/${DOCKER_REPO}
     buildKit:
       inCluster: {}
 
@@ -27,7 +35,7 @@ deployments:
 # This is a list of `dev` containers that are based on the containers created by your deployments
 dev:
   app:
-    imageSelector: ghcr.io/myspotontheweb/argocd-workloads-demo/pre-prod/demo1
+    imageSelector: ${DOCKER_REGISTRY}/${DOCKER_REPO}
     # Replace the container image with this dev-optimized image (allows to skip image building during development)
     devImage: ghcr.io/loft-sh/devspace-containers/java-maven:3-openjdk-17-slim
     # Sync files between the local filesystem and the development container
